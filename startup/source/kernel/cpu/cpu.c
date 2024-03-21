@@ -30,9 +30,7 @@ void init_gdt() {
     lgdt((uint32_t)gdt_table, sizeof(gdt_table));
 }
 
-
-
 void cpu_init(void) {
     init_gdt();
-    irq_init()
+    irq_init();
 }

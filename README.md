@@ -1,12 +1,33 @@
 # DIY-32x86OS
+本仓库为本人学习如何编写一个基于Intel 32位的x86机构的操作系统的代码，学习过程参考了以下仓库、书籍及视频资料：
++ [osdev](https://wiki.osdev.org/Expanded_Main_Page)
++ [沈lifeng/linux0.11-note](https://gitee.com/shen-lifeng/linux-0.11-note#https://gitee.com/link?target=https%3A%2F%2Fpan.baidu.com%2Fs%2F1E0E7wv2MUkhjpbja2nhtzw)
++ [lishutong/diy-x86os](https://gitee.com/ddd-ggg/diy-x86os)
++ [从0开始手写操作系统](https://www.bilibili.com/video/BV1jV4y1H7Gj/?spm_id_from=333.999.0.0)
++ [Linux内核完全注释](/book/Linux内核完全注释：基于0.11内核(修正版V3.0).pdf)
+
 
 ## 操作系统的启动
-### BIOS通过INT10显示字符
-+ AH=功能号 03读取光标位置 13显示字符串
-+ AL=字符
-+ BL=前景色
-+ BH=页码
-+ ES:BP是串地址
+### 计算机上电启动
+![](/pic/计算机上电启动过程.png)
++ 对于x86架构机器为例，一上电，CPU处于`实模式`，以16位方式寻址，并且只能使用`1M`以内的内存
++ `CS = 0xFFFF，IP = 0x0000`，就是内存在0xFFFF0处ROM BIOS的指令
++ BIOS处的指令首先会检查外设，例如CPU，键盘，显示器，硬盘等
++ 然后会将磁盘0磁道0扇区的内容读到内存的`0x7C00`处
++ 最后设置CS = 0x7C00， IP = 0x0000，开始执行`boot`引导扇区里的代码
+
+### boot引导扇区的功能
+boot引导扇区由操作系统开发人员编写，大小要求`512`字节，且最后两个字符由`0x55`和`0xaa`结尾，在boot程序中可以完成以下功能:
++ 清零段寄存器，设置`esp`指针，即栈的位置
++ 显示提示字符
++ 读取`loader`程序，跳转到`loader`执行
+#### 显示提示字符
+> INT 0x10功能显示字符
+> - AH=功能号 0x03读取光标位置 0x13显示字符串
+> - AL=显示模式 01为字符串只包含字符码，显示之后更新光标位置
+> - CX=字符串长度
+> - ES:BP=字符串的段：偏移地址
+
 
 
 ### BIOS通过INT13中断读取磁盘

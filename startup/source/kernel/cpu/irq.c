@@ -1,12 +1,14 @@
 #include "cpu/irq.h"
+
+#include "comm/cpu_instr.h"
 #include "os_cfg.h"
 
 static gate_desc_t idt_table[IDE_TABLE_NR];
 
-void irq_init(void){
-    for (int i = 0; i < IDE_TABLE_NR; i++){
-        gate_desc_set(idt_table + i, KERNEL_SELECTOR_CS, 0, 
-        GATE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT);
+void irq_init(void) {
+    for (int i = 0; i < IDE_TABLE_NR; i++) {
+        gate_desc_set(idt_table + i, KERNEL_SELECTOR_CS, 0,
+                      GATE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT);
     }
 
     lidt((uint32_t)idt_table, sizeof(idt_table));
