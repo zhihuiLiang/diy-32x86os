@@ -7,7 +7,9 @@
         "boot_info.h": "c",
         "os_cfg.h": "c",
         "cpu.h": "c",
-        "cpu_instr.h": "c"
+        "cpu_instr.h": "c",
+        "types.h": "c",
+        "irq.h": "c"
     },
     "cmake.configureOnOpen": true
 }
