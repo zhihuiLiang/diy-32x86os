@@ -31,11 +31,8 @@ static void init_pit(void) {
     irq_enable(IRQ0_TIMER);
 }
 
-/**
- * 定时器初始化
- */
 void time_init(void) {
     sys_tick = 0;
 
-    init_pit();
+    // init_pit();
 }

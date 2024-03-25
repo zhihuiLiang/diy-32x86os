@@ -9,7 +9,17 @@
         "cpu.h": "c",
         "cpu_instr.h": "c",
         "types.h": "c",
-        "irq.h": "c"
+        "irq.h": "c",
+        "page.h": "c",
+        "cstdarg": "cpp",
+        "typeinfo": "c",
+        "stdarg.h": "c",
+        "type_traits": "cpp",
+        "cmath": "cpp",
+        "limits": "cpp",
+        "task.h": "c",
+        "init.h": "c",
+        "mm.h": "c"
     },
     "cmake.configureOnOpen": true
 }

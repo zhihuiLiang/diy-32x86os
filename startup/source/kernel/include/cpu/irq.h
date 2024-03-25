@@ -1,7 +1,9 @@
 #ifndef IRQ_H
 #define IRQ_H
 
+#include "comm/cpu_instr.h"
 #include "comm/types.h"
+#include "os_cfg.h"
 
 #define IDE_TABLE_NR 128
 
