@@ -4,7 +4,7 @@
 #include "comm/cpu_instr.h"
 #include "comm/types.h"
 #include "cpu/cpu.h"
-#include "mm/mm.h"
+#include "mm/memory.h"
 
 #define NR_TASKS 64
 
@@ -76,6 +76,11 @@ typedef struct _task_sturct_t {
 
 } task_struct;
 
+#define SET_TSS_DESC(nr, addr) \
+    segment_desc_set((nr << 1) + FIRST_TSS_ENTRY, addr, 104, SEG_P_PRESENT | SEG_TYPE_CODE | SEG_TYPE_A)
+
+#define SET_LDT_DESC(nr, addr) segment_desc_set((nr << 1) + FIRST_LDT_ENTRY, addr, 104, SEG_P_PRESENT | SEG_TYPE_RW)
+
 // clang-format off
 #define INIT_TASK \
 /* state etc */	{ 0,15,15, \
@@ -100,6 +105,7 @@ typedef struct _task_sturct_t {
 
 extern uint32_t volatile jiffies;
 extern task_struct* current;
+extern task_struct* task[NR_TASKS];
 
 void switch_to(int n);
 void schedule(void);

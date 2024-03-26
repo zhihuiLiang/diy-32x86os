@@ -37,4 +37,14 @@ extern segment_desc_t gdt_table[GDT_TABLE_SIZE];
 void segment_desc_set(int selector, uint32_t base, uint32_t limit, uint16_t attr);
 void init_gdt();
 
+static inline uint32_t get_base(segment_desc_t* seg) {
+    return seg->base15_0 + (seg->base23_16 << 16) + (seg->base31_24 << 24);
+}
+
+static inline void set_base(segment_desc_t* seg, uint32_t base) {
+    seg->base15_0 = base & 0xFFFF;
+    seg->base23_16 = (base >> 16) & 0xFF;
+    seg->base31_24 = (base >> 24) & 0xFF;
+}
+
 #endif

@@ -55,7 +55,7 @@
                 },
                 {
                     "description": "加载内核符号文件",
-                    "text": "add-symbol-file ./build/startup/source/kernel/kernel.elf 0x23000",
+                    "text": "add-symbol-file ./build/startup/source/kernel/kernel.elf 0x37000",
                     "ignoreFailures": false
                 },
                 {

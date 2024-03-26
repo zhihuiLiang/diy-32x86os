@@ -95,7 +95,7 @@ static inline void lldt(int n) {
 
 //// 切换到用户模式运行。
 // 该函数利用 iret 指令实现从内核模式切换到用户模式（初始任务 0）
-static inline void move_to_usre_mode() {
+static inline void move_to_usr_mode() {
     __asm__ __volatile__("movl %%esp,%%eax\n\t"
                          "pushl $0x17\n\t"
                          "pushl %%eax\n\t"
@@ -110,5 +110,13 @@ static inline void move_to_usre_mode() {
                          "movw %%ax,%%gs" ::
                              : "ax");
 }
+
+// 取段选择符 segment 的段长值
+#define get_limit(segment)                                               \
+    ({                                                                   \
+        unsigned long __limit;                                           \
+        __asm__("lsll %1,%0\n\tincl %0" : "=r"(__limit) : "r"(segment)); \
+        __limit;                                                         \
+    })
 
 #endif  //  CPU_INSTR_H

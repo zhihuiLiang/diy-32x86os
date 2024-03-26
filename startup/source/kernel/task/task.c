@@ -60,8 +60,8 @@ void sched_init(void) {
     segment_desc_t* p;
 
     // todo 104?
-    segment_desc_set(FIRST_TSS_ENTRY << 3, (uint32_t) & (init_task.task.tss), 104, SEG_P_PRESENT | SEG_TYPE_CODE | SEG_TYPE_A);
-    segment_desc_set(FIRST_LDT_ENTRY << 3, (uint32_t) & (init_task.task.ldt), 104, SEG_P_PRESENT | SEG_TYPE_RW);
+    SET_TSS_DESC(0, (uint32_t) & (init_task.task.tss));
+    SET_LDT_DESC(0, (uint32_t) & (init_task.task.ldt));
 
     for(int i = 1; i < NR_TASKS; ++i) {
         task[i] = NULL;

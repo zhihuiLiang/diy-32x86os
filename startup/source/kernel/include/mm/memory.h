@@ -3,10 +3,11 @@
 
 #include "comm/cpu_instr.h"
 #include "comm/types.h"
+#include "errno.h"
 
 #define PAGE_DIR_ADDR 0      // 页目录首地址
 #define PAGE_ENTRY_NUM 1024  // 一个页表含有的页表项
-#define PAGE_TABLE_NUM 32  // 本项目的内存为128M，一个页表可寻址1024 * 4KB， 32个页表即可寻址全部内存区域
+#define PAGE_TABLE_NUM 5  // 本项目的内存为128M，一个页表可寻址1024 * 4KB， 32个页表即可寻址全部内存区域
 #define PAGE_SIZE (PAGE_ENTRY_NUM * 4)        // 每一个页表的大小，单位字节
 #define PAGE_TABLE_ADDR (PAGE_ENTRY_NUM * 4)  // 页表首地址
 
@@ -28,5 +29,9 @@ extern uint32_t const* pg_dir;
 
 void init_page_table();
 void mem_init(uint32_t start_mem, uint32_t end_mem);
+uint32_t get_free_page();
+int copy_page_tables(unsigned long from, unsigned long to, long size);
+void free_page(unsigned long addr);
+int free_page_tables(unsigned long from, unsigned long size);
 
 #endif  //

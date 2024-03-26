@@ -3,7 +3,7 @@
 segment_desc_t gdt_table[GDT_TABLE_SIZE];
 
 void segment_desc_set(int selector, uint32_t base, uint32_t limit, uint16_t attr) {
-    segment_desc_t* desc = gdt_table + (selector >> 3);
+    segment_desc_t* desc = gdt_table + selector;
     if(limit > 0xFFFFF) {  // 段限长超过0xFFFFF(1023KB)
         attr |= 0x8000;    // 设置颗粒度为1，即段限长单位为4KB
         limit /= 0x1000;   // 段限长除以4KB
@@ -17,7 +17,7 @@ void segment_desc_set(int selector, uint32_t base, uint32_t limit, uint16_t attr
 
 void init_gdt() {
     for(int i = 0; i < GDT_TABLE_SIZE; i++) {
-        segment_desc_set(i << 3, 0, 0, 0);
+        segment_desc_set(i, 0, 0, 0);
     }
     // 代码段
     segment_desc_set(KERNEL_SELECTOR_DS, 0, 0xFFFFFFFF,

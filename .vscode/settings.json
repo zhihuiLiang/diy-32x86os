@@ -19,7 +19,11 @@
         "limits": "cpp",
         "task.h": "c",
         "init.h": "c",
-        "mm.h": "c"
+        "mm.h": "c",
+        "syscall.h": "c",
+        "system_call.h": "c",
+        "errno.h": "c",
+        "memory.h": "c"
     },
     "cmake.configureOnOpen": true
 }
